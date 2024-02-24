@@ -1,0 +1,42 @@
+version: "3.8"
+
+networks:
+  ecommerce-net:
+    driver: bridge
+
+volumes:
+  database-vol:
+
+services:
+  
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - 8080:80
+    networks:
+      - ecommerce-net
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - 3000:3000
+    networks:
+      - ecommerce-net
+
+  database:
+    image: mongo:latest
+    container_name: mongodb
+    networks:
+      - ecommerce-net
+    restart: always
+    volumes:
+      - database-vol:/data/db
+    environment:  
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example

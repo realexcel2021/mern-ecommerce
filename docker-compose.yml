@@ -7,6 +7,7 @@ networks:
 volumes:
   database-vol:
   prometheus-vol:
+  grafana-storage:
 
 services:
   
@@ -69,23 +70,16 @@ services:
     ports:
       - "8080:8080"
     restart: always
-    depends_on:
-      - redis
 
-  redis:
-    image: redis:latest
-    container_name: redis
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
     ports:
-    - 6379:6379
+      - '3001:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./monitoring/grafana/datasource.yml:/etc/grafana/provisioning/datasources 
 
+  
 
-  # node_exporter:
-  #   image: prom/node-exporter
-  #   container_name: node_exporter
-  #   command:
-  #     - '--path.rootfs=/host'
-  #   network_mode: host
-  #   pid: host
-  #   restart: unless-stopped
-  #   volumes:
-  #     - '/:/host:ro,rslave'

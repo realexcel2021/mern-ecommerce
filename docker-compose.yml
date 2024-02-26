@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-      - 8080:80
+      - 8081:80
     networks:
       - ecommerce-net
 
@@ -42,17 +42,41 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
+
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.37.9
     container_name: prometheus
     ports:
       - 9090:9090
     volumes:
-      - ./prometheus/prometheus.yml:etc/prometheus/prometheus.yml
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-vol:/prometheus
     command:
-      - --web.config.file
-      - /etc/prometheus/prometheus.yml
+      - --config.file=/etc/prometheus/prometheus.yml
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.2
+    container_name: cadvisor
+    privileged: true
+    volumes:
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+    - 6379:6379
 
 
   # node_exporter:

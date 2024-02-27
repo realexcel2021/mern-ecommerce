@@ -3,6 +3,7 @@ version: "3.8"
 networks:
   ecommerce-net:
     driver: bridge
+  loki-net:
 
 volumes:
   database-vol:
@@ -79,7 +80,26 @@ services:
       - '3001:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./monitoring/grafana/datasource.yml:/etc/grafana/provisioning/datasources 
+      - ./monitoring/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    networks:
+      - loki-net
+    depends_on:
+      - loki
 
-  
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    networks:
+      - loki-net
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail/promtail-config.yml:/etc/promtail/promtail-config.yaml
+    networks:
+      - loki-net
+    depends_on:
+      - loki
 

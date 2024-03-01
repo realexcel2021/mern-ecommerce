@@ -1,0 +1,6 @@
+{
+    "connectionString.standard": "mongodb://my-user:12345678@example-mongodb-0.example-mongodb-svc.tanmay.svc.cluster.local:27017,example-mongodb-1.example-mongodb-svc.tanmay.svc.cluster.local:27017,example-mongodb-2.example-mongodb-svc.tanmay.svc.cluster.local:27017/admin?replicaSet=example-mongodb&ssl=false",
+    "connectionString.standardSrv": "mongodb+srv://admin:12345678@example-mongodb-svc.tanmay.svc.cluster.local/admin?replicaSet=example-mongodb&ssl=false",
+    "password": "12345678",
+    "username": "my-user"
+}

@@ -1,0 +1,61 @@
+name: "Pipeline to build both frontend and backend images"
+
+on:
+    workflow_dispatch:
+      branches:
+        - main
+
+env: 
+    FRONTEND_DOCKER_IMAGE: sheriffexcel/ecommerce-frontend
+    BACKEND_DOCKER_IMAGE: sheriffexcel/ecommerce-backend
+
+jobs:
+    
+    build-frontend-image:
+        runs-on: ubuntu-latest
+
+        steps:
+          - name: ${{github.event.inputs.id}}
+            run: echo run identifier ${{ inputs.id }}
+          
+          - name: Checkout Codebase
+            uses: actions/checkout@v4
+            with:
+                sparse-checkout: |
+                    client
+
+
+          - uses: mr-smithers-excellent/docker-build-push@v6
+            name: Build & push Docker image
+            with:
+              image: ${{ env.FRONTEND_DOCKER_IMAGE }}
+              tags: latest
+              registry: docker.io
+              dockerfile: client/Dockerfile
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    build-backend-image:
+        runs-on: ubuntu-latest
+        steps:
+            - name: ${{github.event.inputs.id}}
+              run: echo run identifier ${{ inputs.id }}
+            
+            - name: Checkout Codebase
+              uses: actions/checkout@v4
+              with: 
+                sparse-checkout: |
+                    server
+  
+  
+            - uses: mr-smithers-excellent/docker-build-push@v6
+              name: Build & push Docker image
+              with:
+                image: ${{ env.BACKEND_DOCKER_IMAGE }}
+                tags: latest
+                registry: docker.io
+                dockerfile: server/Dockerfile
+                username: ${{ secrets.DOCKER_USERNAME }}
+                password: ${{ secrets.DOCKER_PASSWORD }}
+
+          

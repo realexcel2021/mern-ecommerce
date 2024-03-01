@@ -3,7 +3,7 @@ name: "Pipeline to build both frontend and backend images"
 on:
     workflow_dispatch:
       branches:
-        - main
+        - master
 
 env: 
     FRONTEND_DOCKER_IMAGE: sheriffexcel/ecommerce-frontend

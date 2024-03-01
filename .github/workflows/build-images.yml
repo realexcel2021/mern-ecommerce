@@ -20,9 +20,6 @@ jobs:
           
           - name: Checkout Codebase
             uses: actions/checkout@v4
-            with:
-                sparse-checkout: |
-                    client
 
 
           - uses: mr-smithers-excellent/docker-build-push@v6
@@ -42,10 +39,7 @@ jobs:
               run: echo run identifier ${{ inputs.id }}
             
             - name: Checkout Codebase
-              uses: actions/checkout@v4
-              with: 
-                sparse-checkout: |
-                    server
+              uses: actions/checkout@v4r
   
   
             - uses: mr-smithers-excellent/docker-build-push@v6

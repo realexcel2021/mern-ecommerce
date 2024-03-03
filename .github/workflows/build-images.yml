@@ -21,7 +21,7 @@ jobs:
 
 
           - uses: mr-smithers-excellent/docker-build-push@v6
-            name: Build & push Docker image
+            name: Build frontend Image
             with:
               image: ${{ env.FRONTEND_DOCKER_IMAGE }}
               tags: latest
@@ -30,25 +30,18 @@ jobs:
               registry: docker.io
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}
-    
-    build-backend-image:
-        runs-on: ubuntu-latest
-        steps:
-            - name: ${{github.event.inputs.id}}
-              run: echo run identifier ${{ inputs.id }}
-            
-            - name: Checkout Codebase
-              uses: actions/checkout@v4
+
+          - uses: mr-smithers-excellent/docker-build-push@v6
+            name: Build Backend image
+            with:
+              image: ${{ env.BACKEND_DOCKER_IMAGE }}
+              directory: ./server/
+              dockerfile: ./server/Dockerfile
+              tags: latest
+              registry: docker.io
+              username: ${{ secrets.DOCKER_USERNAME }}
+              password: ${{ secrets.DOCKER_PASSWORD }}
+
   
-  
-            - uses: mr-smithers-excellent/docker-build-push@v6
-              name: Build & push Docker image
-              with:
-                image: ${{ env.BACKEND_DOCKER_IMAGE }}
-                directory: server
-                tags: latest
-                registry: docker.io
-                username: ${{ secrets.DOCKER_USERNAME }}
-                password: ${{ secrets.DOCKER_PASSWORD }}
 
           

@@ -4,9 +4,9 @@ on:
     workflow_dispatch:
       branches:
         - master
-    push:
-      branches:
-        - master
+    # push:
+    #   branches:
+    #     - master
 
 env: 
     FRONTEND_DOCKER_IMAGE: sheriffexcel/ecommerce-frontend

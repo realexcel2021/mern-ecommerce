@@ -25,7 +25,7 @@ jobs:
             with:
               image: ${{ env.FRONTEND_DOCKER_IMAGE }}
               tags: latest
-              directory: ./mern-ecommerce-master/client/
+              dockerfile: ./client/Dockerfile
               registry: docker.io
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}

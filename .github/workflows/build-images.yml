@@ -25,7 +25,7 @@ jobs:
             with:
               image: ${{ env.FRONTEND_DOCKER_IMAGE }}
               tags: latest
-              directory: ./client
+              directory: client
               registry: docker.io
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}
@@ -44,7 +44,7 @@ jobs:
               name: Build & push Docker image
               with:
                 image: ${{ env.BACKEND_DOCKER_IMAGE }}
-                directory: ./server
+                directory: server
                 tags: latest
                 registry: docker.io
                 username: ${{ secrets.DOCKER_USERNAME }}

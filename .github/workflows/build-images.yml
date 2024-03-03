@@ -28,7 +28,7 @@ jobs:
               image: ${{ env.FRONTEND_DOCKER_IMAGE }}
               tags: latest
               registry: docker.io
-              dockerfile: Dockerfile
+              dockerfile: ./client/Dockerfile
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}
     
@@ -48,7 +48,7 @@ jobs:
                 image: ${{ env.BACKEND_DOCKER_IMAGE }}
                 tags: latest
                 registry: docker.io
-                dockerfile: Dockerfile
+                dockerfile: ./server/Dockerfile
                 username: ${{ secrets.DOCKER_USERNAME }}
                 password: ${{ secrets.DOCKER_PASSWORD }}
 

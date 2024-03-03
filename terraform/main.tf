@@ -1,6 +1,16 @@
-provider "aws" {
-  region = "us-west-2"
+terraform {
+  backend "s3" {
+    bucket = "mern-ecommernce-tfstate"
+    key    = "state/terraform.tfstate"
+    region = var.region
+  }
 }
+
+
+provider "aws" {
+  region = var.region
+}
+
 
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"

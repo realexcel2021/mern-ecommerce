@@ -15,5 +15,9 @@ variable "public_subnets" {
 }
 
 variable "tags" {
-  type = map()
+  type = map(any)
+}
+
+variable "region" {
+  type = string
 }

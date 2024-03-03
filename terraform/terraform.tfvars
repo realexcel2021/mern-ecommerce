@@ -11,3 +11,5 @@ tags = {
   project_name = "ecommerce-app"
   Terraform    = "true"
 }
+
+region = "eu-west-1"

@@ -5,6 +5,7 @@ module "eks" {
   cluster_name    = "${var.project_name}-cluster"
   cluster_version = "1.29"
 
+
   cluster_endpoint_public_access = true
 
   cluster_addons = {
@@ -50,7 +51,7 @@ module "eks" {
     # One access entry with a policy associated
     example = {
       kubernetes_groups = []
-      principal_arn     = data.aws_caller_identity.arn
+      principal_arn     = data.aws_caller_identity.current.arn
 
       policy_associations = {
         admin = {

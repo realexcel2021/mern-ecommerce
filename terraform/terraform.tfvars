@@ -1,6 +1,6 @@
 project_name = "ecommerce-project"
 
-azs = ["us-west-1a", "us-west-1b"]
+azs = ["eu-west-1a", "eu-west-1b"]
 
 private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
 

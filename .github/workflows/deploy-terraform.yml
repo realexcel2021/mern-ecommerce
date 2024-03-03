@@ -40,6 +40,11 @@ jobs:
             - name: terraform plan
               run: terraform plan
 
+            - name: format terraform
+              run: terraform fmt
+            
+            - name: apply terraform
+              run: terraform apply --auto-approve
 
                 
 

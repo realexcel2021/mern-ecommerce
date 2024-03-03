@@ -24,10 +24,10 @@ jobs:
 
           - uses: mr-smithers-excellent/docker-build-push@v6
             name: Build & push Docker image
-            working-directory: ./client
             with:
               image: ${{ env.FRONTEND_DOCKER_IMAGE }}
               tags: latest
+              directory: ./client
               registry: docker.io
               dockerfile: Dockerfile
               username: ${{ secrets.DOCKER_USERNAME }}
@@ -45,9 +45,9 @@ jobs:
   
             - uses: mr-smithers-excellent/docker-build-push@v6
               name: Build & push Docker image
-              working-directory: ./server
               with:
                 image: ${{ env.BACKEND_DOCKER_IMAGE }}
+                directory: ./server
                 tags: latest
                 registry: docker.io
                 dockerfile: Dockerfile

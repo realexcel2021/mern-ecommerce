@@ -25,6 +25,7 @@ jobs:
             with:
               image: ${{ env.FRONTEND_DOCKER_IMAGE }}
               tags: latest
+              directory: ./client/
               dockerfile: ./client/Dockerfile
               registry: docker.io
               username: ${{ secrets.DOCKER_USERNAME }}

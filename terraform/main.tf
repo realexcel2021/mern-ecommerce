@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket = "mern-ecommernce-tfstate"
     key    = "state/terraform.tfstate"
-    region = "us-west-1"
+    region = "eu-west-1"
   }
 }
 

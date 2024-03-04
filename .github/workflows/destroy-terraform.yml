@@ -43,7 +43,7 @@ jobs:
             - name: format terraform
               run: terraform fmt
             
-            - name: apply terraform
+            - name: destroy terraform
               run: terraform destroy --auto-approve
 
                 

@@ -6,12 +6,6 @@ terraform {
   }
 }
 
-
-provider "aws" {
-  region = var.region
-}
-
-
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -30,3 +24,9 @@ module "vpc" {
 # get user identity
 
 data "aws_caller_identity" "current" {}
+
+# providers
+
+data "aws_eks_cluster_auth" "this" {
+  name = var.cluster_name
+}

@@ -21,6 +21,8 @@ services:
       - 8081:80
     networks:
       - ecommerce-net
+    environment:
+      - API_URL=http://backend:3000
 
   backend:
     build:

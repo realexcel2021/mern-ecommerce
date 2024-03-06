@@ -68,7 +68,7 @@ services:
     volumes:
       - /var/run:/var/run:ro
       - /sys:/sys:ro
-      - - /:/rootfs:ro # for linux alpine
+      - /:/rootfs:ro # for linux alpine
       - /var/run:/var/run
       - /var/lib/docker/:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro

@@ -68,11 +68,14 @@ services:
     volumes:
       - /var/run:/var/run:ro
       - /sys:/sys:ro
+      - - /:/rootfs:ro # for linux alpine
+      - /var/run:/var/run
       - /var/lib/docker/:/var/lib/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/machine-id:/etc/machine-id:ro
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
-      # - /dev/disk/:/dev/disk:ro
+      - /dev/disk/:/dev/disk:ro
+      - - /sys/fs/cgroup:/cgroup:ro # for alpine linux
     ports:
       - "8080:8080"
     restart: always

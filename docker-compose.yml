@@ -65,7 +65,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.2
     container_name: cadvisor
-    previlaged: true
+    privilaged: true
     volumes:
       - /var/run:/var/run:ro
       - /sys:/sys:ro

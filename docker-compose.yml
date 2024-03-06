@@ -75,7 +75,7 @@ services:
       - /etc/machine-id:/etc/machine-id:ro
       - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
       - /dev/disk/:/dev/disk:ro
-      - - /sys/fs/cgroup:/cgroup:ro # for alpine linux
+      - /sys/fs/cgroup:/cgroup:ro # for alpine linux
     ports:
       - "8080:8080"
     restart: always

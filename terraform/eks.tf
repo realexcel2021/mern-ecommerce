@@ -1,14 +1,5 @@
 # configure oidc
 
-module "iam_assumable_role_karpenter" {
-  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
-  version                       = "4.7.0"
-  create_role                   = true
-  role_name                     = "karpenter-controller-${var.environment_class}-${data.aws_region.current.name}"
-  provider_url                  = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
-  oidc_fully_qualified_subjects = ["system:serviceaccount:${kubernetes_namespace.karpenter.id}:karpenter"]
-}
-
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
@@ -78,13 +69,4 @@ module "eks" {
   }
 
   tags = var.tags
-}
-
-# pod identity for karpenter
-
-resource "aws_eks_pod_identity_association" "example" {
-  cluster_name    = module.eks.cluster_name
-  namespace       = "kube-system"
-  service_account = "karpenter"
-  role_arn        = aws_iam_role.example.arn
 }

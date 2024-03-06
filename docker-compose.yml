@@ -13,9 +13,10 @@ volumes:
 services:
   
   frontend:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./client
+    #   dockerfile: Dockerfile
+    image: sheriffexcel/ecommerce-frontend
     container_name: frontend
     ports:
       - 8081:80
@@ -25,9 +26,10 @@ services:
       - API_URL=http://backend:3000
 
   backend:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    # build:
+    #   context: ./server
+    #   dockerfile: Dockerfile
+    image: sheriffexcel/ecommerce-backend
     container_name: backend
     ports:
       - 3000:3000

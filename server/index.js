@@ -12,6 +12,8 @@ const setupDB = require('./utils/db');
 const { port } = keys;
 const app = express();
 
+app.get('/api', (req, res) => res.send('Hello World!'))
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(

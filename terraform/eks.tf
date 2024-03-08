@@ -27,6 +27,10 @@ module "eks" {
     aws-ebs-csi-driver = {
       most_recent = true
     }
+
+    eks-pod-identity-agent = {
+      most_recent = true
+    }
   }
 
   vpc_id                   = module.vpc.vpc_id
@@ -43,8 +47,8 @@ module "eks" {
     managed_nodegp-1 = {
 
       min_size     = 1
-      max_size     = 2
-      desired_size = 1
+      max_size     = 3
+      desired_size = 2
 
       instance_types = ["t2.medium"]
       capacity_type  = "SPOT"
@@ -87,7 +91,7 @@ module "karpenter" {
   enable_irsa            = true
   irsa_oidc_provider_arn = module.eks.oidc_provider_arn
 
-  create_node_iam_role = false
+  create_node_iam_role = true
   node_iam_role_arn    = module.eks.eks_managed_node_groups["managed_nodegp-1"].iam_role_arn
 
 
@@ -104,3 +108,39 @@ module "karpenter" {
 
 #   create = false
 # }
+
+
+# pod identity for karpenter
+
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["pods.eks.amazonaws.com"]
+    }
+
+    actions = [
+      "sts:AssumeRole",
+      "sts:TagSession"
+    ]
+  }
+}
+
+resource "aws_iam_role" "example" {
+  name               = "eks-pod-identity-example"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "example_s3" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  role       = aws_iam_role.example.name
+}
+
+resource "aws_eks_pod_identity_association" "example" {
+  cluster_name    = module.eks.cluster_name
+  namespace       = "kube-system"
+  service_account = "karpenter"
+  role_arn        = aws_iam_role.example.arn
+}

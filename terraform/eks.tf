@@ -53,7 +53,7 @@ module "eks" {
 
   # Cluster access entry
   # To add the current caller identity as an administrator
-  enable_cluster_creator_admin_permissions = true
+  # enable_cluster_creator_admin_permissions = true
 
   access_entries = {
     # One access entry with a policy associated
@@ -63,10 +63,9 @@ module "eks" {
 
       policy_associations = {
         admin = {
-          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
           access_scope = {
-            namespaces = []
-            type       = "cluster"
+            type = "cluster"
           }
         }
       }
@@ -81,7 +80,8 @@ module "eks" {
 module "karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
 
-  cluster_name = module.eks.cluster_name
+  cluster_name        = module.eks.cluster_name
+  create_access_entry = false
 
   # EKS Fargate currently does not support Pod Identity
   enable_irsa            = true

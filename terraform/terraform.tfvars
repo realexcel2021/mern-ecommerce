@@ -1,6 +1,6 @@
 project_name = "ecommerce-project"
 
-azs = ["eu-west-1a", "eu-west-1b"]
+azs = ["us-east-1a", "us-east-1b"]
 
 private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
 
@@ -12,4 +12,4 @@ tags = {
   Terraform    = "true"
 }
 
-region = "eu-west-1"
+region = "us-east-1"

@@ -1,9 +1,13 @@
 terraform {
   backend "s3" {
-    bucket = "mern-ecommernce-tfstate"
+    bucket = "mern-ecommernce-tfstate-2"
     key    = "state/terraform.tfstate"
-    region = "us-west-1"
+    region = "us-east-1"
   }
+}
+
+provider "aws" {
+  region = var.region
 }
 
 module "vpc" {

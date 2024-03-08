@@ -13,15 +13,22 @@ AWS_DEFAULT_REGION="us-east-1"
 AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 TEMPOUT="$(mktemp)"
 
+curl -fsSL https://raw.githubusercontent.com/aws/karpenter-provider-aws/v"${KARPENTER_VERSION}"/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml  > "${TEMPOUT}" \
+&& aws cloudformation deploy \
+  --stack-name "Karpenter-ecommerce-project-cluster" \
+  --template-file "${mktemp}" \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --parameter-overrides "ClusterName=${CLUSTER_NAME}"
+
 # Logout of helm registry to perform an unauthenticated pull against the public ECR
 helm registry logout public.ecr.aws
 
-helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version "${KARPENTER_VERSION}" --namespace "${KARPENTER_NAMESPACE}" --create-namespace \
-  --set "settings.clusterName=${CLUSTER_NAME}" \
-  --set "settings.interruptionQueue=${CLUSTER_NAME}" \
+helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version "0.35.0" --namespace "kube-system" --create-namespace \
+  --set "settings.clusterName=ecommerce-project-cluster" \
+  --set "settings.interruptionQueue=ecommerce-project-cluster" \
   --set controller.resources.requests.cpu=1 \
   --set controller.resources.requests.memory=1Gi \
   --set controller.resources.limits.cpu=1 \
   --set controller.resources.limits.memory=1Gi \
-  --wait
+  --wait --debug
 

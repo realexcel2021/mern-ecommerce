@@ -10,6 +10,23 @@ provider "aws" {
   region = var.region
 }
 
+data "aws_eks_cluster" "example" {
+  name = module.eks.cluster_name
+}
+
+data "aws_eks_cluster_auth" "auth" {
+  name = module.eks.cluster_name
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = module.eks.cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+    token                  = data.aws_eks_cluster_auth.auth.token
+  }
+}
+
+
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 

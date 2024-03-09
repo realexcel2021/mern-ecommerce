@@ -46,6 +46,7 @@ module "eks" {
   eks_managed_node_groups = {
     managed_nodegp-1 = {
 
+
       min_size     = 1
       max_size     = 3
       desired_size = 2
@@ -74,9 +75,23 @@ module "eks" {
         }
       }
     }
+
+    ex-single = {
+
+      kubernetes_groups = []
+      principal_arn     = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/KarpenterNodeRole-ecommerce-project-cluster"
+      # user_name         = "system:node:{{EC2PrivateDNSName}}"
+
+    }
+
   }
 
-  tags = var.tags
+  tags = {
+    Environment              = "prod"
+    project_name             = "ecommerce-app"
+    Terraform                = "true"
+    "karpenter.sh/discovery" = "ecommerce-project-cluster"
+  }
 }
 
 # karpenter stuff

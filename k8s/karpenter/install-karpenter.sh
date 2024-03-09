@@ -19,6 +19,7 @@ helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --vers
   --set controller.resources.requests.cpu=1 \
   --set controller.resources.requests.memory=1Gi \
   --set controller.resources.limits.cpu=1 \
+  --set "aws.defaultInstanceProfile=KarpenterNodeInstanceProfile-${CLUSTER_NAME}" \
   --set controller.resources.limits.memory=1Gi \
   --wait --debug
 

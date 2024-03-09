@@ -7,7 +7,7 @@ KARPENTER_VERSION="0.35.0"
 K8S_VERSION="1.29"
 
 AWS_PARTITION="aws" # if you are not using standard partitions, you may need to configure to aws-cn / aws-us-gov
-AWS_DEFAULT_REGION="us-east-1"
+AWS_DEFAULT_REGION="eu-west-1"
 AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 
 echo "Installing IAM roles and service accounts..."

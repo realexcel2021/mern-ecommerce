@@ -14,7 +14,7 @@ spec:
             path: "/"
             backend:
               service:
-                name: ecommerce-frontend
+                name: frontend-service
                 port:
                   number: 80
 
@@ -25,7 +25,7 @@ spec:
             path: "/frontend"
             backend:
               service:
-                name: ecommerce-frontend
+                name: frontend-service
                 port:
                   number: 80
 

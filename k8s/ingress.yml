@@ -5,8 +5,9 @@ metadata:
   labels:
     name: ecommerce-mern
 spec:
+  ingressClassName: nginx
   rules:
-    - host: ecommerce.com
+    - host: ec-mern.com
       http:
         paths:
           - pathType: Prefix
@@ -17,7 +18,7 @@ spec:
                 port:
                   number: 80
 
-    - host: ecommerce.com
+    - host: ec-mern.com
       http:
         paths:
           - pathType: Prefix
@@ -28,13 +29,24 @@ spec:
                 port:
                   number: 80
 
-    - host: backend.ecommerce.com
+    - host: react.ec-mern.com
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: ecommerce-backend
+                name: react-frontend
+                port:
+                  number: 80
+
+    - host: ec-mern.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/react"
+            backend:
+              service:
+                name: react-frontend
                 port:
                   number: 80

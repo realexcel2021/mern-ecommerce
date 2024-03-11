@@ -42,4 +42,4 @@ metadata:
   name: mongodb-password
 type: Opaque
 stringData:
-  password: <your-password-here>
+  password: dGVzdGFwc3N3b3JkMTIzNDU2

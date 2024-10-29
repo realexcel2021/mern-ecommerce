@@ -1,6 +1,6 @@
-# MERN Ecommerce
+# MERN Ecommerce Project
 
-## Description
+## Codebase Description
 
 An ecommerce store built with MERN stack, and utilizes third party API's. This ecommerce store enable three main different flows or implementations:
 
@@ -35,7 +35,7 @@ This application is deployed on Vercel Please check it out :smile: [here](https:
 
 See admin dashboard [demo](https://mernstore-bucket.s3.us-east-2.amazonaws.com/admin.mp4)
 
-## Install
+### Install
 
 Some basic Git commands are:
 
@@ -45,19 +45,19 @@ $ cd project
 $ npm install
 ```
 
-## Start development
+### Start development
 
 ```
 $ npm run dev
 ```
 
-## Simple build for production
+### Simple build for production
 
 ```
 $ npm run build
 ```
 
-## Run build for production
+### Run build for production
 
 ```
 $ npm start
@@ -77,23 +77,39 @@ $ npm start
 - [Webpack](https://webpack.js.org/)
 
 
-### Code Formatter
+## Cloud Infrastructure Deployment
 
-- Add a `.vscode` directory
-- Create a file `settings.json` inside `.vscode`
-- Install Prettier - Code formatter in VSCode
-- Add the following snippet:  
+AWS cloud is used to deploy this application using Amazon EKS. A quick view of what the cloud archtecture looks like is given below:
 
-```json
+![img](./arch.png)
 
-    {
-      "editor.formatOnSave": true,
-      "prettier.singleQuote": true,
-      "prettier.arrowParens": "avoid",
-      "prettier.jsxSingleQuote": true,
-      "prettier.trailingComma": "none",
-      "javascript.preferences.quoteStyle": "single",
-    }
+The archtecture consists of the following services
 
-```
+
+| Name | Shortcode |
+| --- | --- | 
+| VPC | :heavy_check_mark: |
+| 2 private Subnets | :heavy_check_mark:|
+| 2 Public Subnets  | :heavy_check_mark:|
+| Internet Gateway  | :heavy_check_mark:|
+| NAT Gateway       | :heavy_check_mark:|
+| EKS Cluster       | :heavy_check_mark:|
+| IAM Roles         | :heavy_check_mark:|
+| EC2 (k8s Nodes)     | :heavy_check_mark:|
+| Cloud watch log group | :heavy_check_mark:|
+
+## DevOps Practice
+
+The infrastructure can be deployed using github actions utilizing the power of Infrastructure as code and packaging a pipeline to bootstrap the infrastructure and deploy the application through a CI pipeline. 
+
+The Github actions CI pipeline also builds the application code and push to a docker image. 
+
+## Monitoring
+
+See `/monitoring` folder readme...
+
+
+## Kubernetes Node Autoscaling
+
+See `/k8s` folder readme...
 
